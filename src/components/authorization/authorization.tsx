@@ -19,12 +19,10 @@ type AuthInputs = {
 };
 const Authorization = () => {
     const dispatch = useDispatch();
-
     const isOpen = useSelector((state: ModalStore) => state.modal.isOpen);
     const isLogined = useSelector(
         (state: AuthorizationStore) => state.authorization.isLogined
     );
-
     const handleOpenModal = () => dispatch(TOGGLE_MODAL(true));
     const handleCloseModal = () => dispatch(TOGGLE_MODAL(false));
 

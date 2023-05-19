@@ -5,7 +5,7 @@ type PaginationProps = {
     prevPage: () => void;
     currentPage: number;
     totalPages: number;
-}
+};
 const Pagination = ({
     nextPage,
     prevPage,

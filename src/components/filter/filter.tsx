@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Genres from 'src/components/filter/genres/genres';
 import Pagination from 'src/components/filter/pagination/pagination';
 import Selector from 'src/components/filter/selector/selector';
-import { ADD_FILTERED_MOVIES } from 'src/store/movieSlice';
+import { DEFAULT_MOVIES_LIST } from 'src/data/movies-list';
 import {
     SELECT_DEFAULT_OPTION,
     SELECT_MOVIES_LIST,
@@ -13,8 +13,8 @@ import {
     selectYearOptions,
 } from 'src/shared/const';
 import { defaultFilter, filterMovies } from 'src/shared/filters';
-import { DEFAULT_MOVIES_LIST } from 'src/data/movies-list';
-import { MoviesStore, AuthorizationStore } from 'src/shared/types';
+import { AuthorizationStore, MoviesStore } from 'src/shared/types';
+import { ADD_FILTERED_MOVIES } from 'src/store/movieSlice';
 import './filter.css';
 
 type FilterProps = {
@@ -80,6 +80,17 @@ const Filter = ({
         dispatch(ADD_FILTERED_MOVIES(defaultFilter()));
     };
 
+    const isCheckedGenre = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        id: number
+    ) => {
+        if (event.target.checked) {
+            setGenres([...genres, id]);
+        } else {
+            setGenres([...genres.filter((item) => item != id)]);
+        }
+    };
+
     return (
         <>
             <div className='filter_wrapper'>
@@ -94,7 +105,7 @@ const Filter = ({
                 <h4>Сортировать по:</h4>
                 <Selector
                     options={selectDetailsOptions}
-                    value={selectDetails}
+                    defaultValue={selectDetails}
                     onChange={(value) => {
                         setSelectDetails(value);
                     }}
@@ -102,7 +113,7 @@ const Filter = ({
                 <h4>Год релиза:</h4>
                 <Selector
                     options={selectYearOptions}
-                    value={selectYear}
+                    defaultValue={selectYear}
                     onChange={(value) => {
                         setSelectYear(value);
                     }}
@@ -110,7 +121,7 @@ const Filter = ({
                 {isLogined ? (
                     <Selector
                         options={selectMoviesListOptions}
-                        value={selectMoviesList}
+                        defaultValue={selectMoviesList}
                         onChange={(value) => {
                             setSelectMoviesList(value);
                         }}
@@ -119,13 +130,7 @@ const Filter = ({
 
                 <Genres
                     genres={genres}
-                    onChange={(event, id) =>
-                        event.target.checked
-                            ? setGenres([...genres, id])
-                            : setGenres([
-                                  ...genres.filter((item) => item != id),
-                              ])
-                    }
+                    onChange={(event, id) => isCheckedGenre(event, id)}
                 />
                 <Pagination
                     nextPage={nextPage}

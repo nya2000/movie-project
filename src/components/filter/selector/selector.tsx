@@ -1,46 +1,38 @@
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useState } from 'react';
+import { SelectStyle } from 'src/shared/const';
 
 type Options = {
     label: string;
-    value: string;
-    id: string;
+    value?: string;
+    id: string | number;
 };
 
 type SelectorProps = {
     options: Options[];
-    value: string | undefined;
+    defaultValue: string | undefined;
     onChange: (value: string) => void;
 };
 
-const Selector = ({ options, value, onChange }: SelectorProps) => {
+const Selector = ({ options, defaultValue, onChange }: SelectorProps) => {
+    const [selectValue, setSelectValue] = useState(defaultValue);
+
     const handleChange = (event: SelectChangeEvent) => {
         onChange(event.target.value);
+        setSelectValue(event.target.value);
     };
 
     return (
         <FormControl fullWidth size='small'>
             <Select
-                value={value}
+                value={selectValue}
                 onChange={handleChange}
-                sx={{
-                    m: '10px 0',
-                    color: 'white',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'white',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'white',
-                    },
-                    '& .MuiSvgIcon-root': {
-                        color: 'white',
-                    },
-                    width: '220px',
-                }}
+                sx={SelectStyle}
             >
                 {options.map((option) => (
-                    <MenuItem key={option.id} value={option.value}>
+                    <MenuItem key={option.id} value={option.value || option.id}>
                         {option.label}
                     </MenuItem>
                 ))}

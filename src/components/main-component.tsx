@@ -4,6 +4,7 @@ import Movies from 'src/components/movies/movies';
 import usePagination from 'src/hooks/usePagination/usePagination';
 import { MoviesStore } from 'src/shared/types';
 import '../styled/App.css';
+import { ITEMS_PER_PAGE } from 'src/shared/const';
 
 function MainComponent() {
     const movies = useSelector(
@@ -17,7 +18,7 @@ function MainComponent() {
         page,
         totalPages,
     } = usePagination({
-        contentPerPage: 9,
+        contentPerPage: ITEMS_PER_PAGE,
         count: movies.length,
     });
 

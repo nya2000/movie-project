@@ -31,9 +31,7 @@ const MovieDetails = () => {
                         <img
                             src={moviePoster}
                             className='movie-details-poster'
-                            alt=''
                         />
-
                         <Box>
                             <Typography variant='h3' fontWeight={'bold'}>
                                 {movie.title}

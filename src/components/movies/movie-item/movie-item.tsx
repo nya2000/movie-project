@@ -35,73 +35,54 @@ const MovieItem = ({ movie }: { movie: MovieItemType }) => {
     );
     const handleOpenModal = () => dispatch(TOGGLE_MODAL(true));
 
-    const updateMovieList = (
+    const onClickIconHandler = (
         movies: MovieItemType[],
         ADD_FAVORITE_MOVIE: ActionCreatorWithPayload<MovieItemType>,
         REMOVE_FAVORITE_MOVIE: ActionCreatorWithPayload<MovieItemType>
     ) => {
-        if (movies.some((item) => item.id === movie.id)) {
-            dispatch(REMOVE_FAVORITE_MOVIE(movie));
-        } else {
-            dispatch(ADD_FAVORITE_MOVIE(movie));
+        if (isLogined) {
+            const IS_FAVORITE_MOVIE = movies.some(
+                (item) => item.id === movie.id
+            );
+            if (IS_FAVORITE_MOVIE) {
+                dispatch(REMOVE_FAVORITE_MOVIE(movie));
+            } else {
+                dispatch(ADD_FAVORITE_MOVIE(movie));
+            }
         }
+        return handleOpenModal;
     };
 
-    const handleOnClick = () =>
-        isLogined
-            ? () =>
-                  updateMovieList(
-                      savedMovies,
-                      ADD_SAVED_MOVIE,
-                      REMOVE_SAVED_MOVIE
-                  )
-            : handleOpenModal;
+    const isActiveIcon = (movies: MovieItemType[]) => {
+        if (isLogined) {
+            return movies.some((item) => item.id === movie.id);
+        }
+        return false;
+    };
 
     return (
         <div className='movie_item'>
             <div className='movie_item_poster'>
-                <img src={moviePoster} alt='' />
+                <img src={moviePoster} alt='moviePoster' />
             </div>
             <div className='movie_item_details'>
                 <div className='movie_item_details_header'>
                     <p>{`Рейтинг:  ${movie.vote_average}`}</p>
                     <FavoriteIcon
-                        onClick={
-                            isLogined
-                                ? () =>
-                                      updateMovieList(
-                                          favoriteMovies,
-                                          ADD_FAVORITE_MOVIE,
-                                          REMOVE_FAVORITE_MOVIE
-                                      )
-                                : handleOpenModal
-                        }
-                        active={
-                            isLogined
-                                ? favoriteMovies.some(
-                                      (item) => item.id === movie.id
-                                  )
-                                : false
-                        }
+                        onClick={onClickIconHandler(
+                            favoriteMovies,
+                            ADD_FAVORITE_MOVIE,
+                            REMOVE_FAVORITE_MOVIE
+                        )}
+                        active={isActiveIcon(favoriteMovies)}
                     />
                     <SavedIcon
-                        onClick={
-                            isLogined
-                                ? () =>
-                                      updateMovieList(
-                                          savedMovies,
-                                          ADD_SAVED_MOVIE,
-                                          REMOVE_SAVED_MOVIE
-                                      )
-                                : handleOpenModal
-                        }
-                        active={
-                            isLogined
-                                ? savedMovies.some(
-                                      (item) => item.id === movie.id
-                                  )
-                                : false
-                        }
+                        onClick={onClickIconHandler(
+                            savedMovies,
+                            ADD_SAVED_MOVIE,
+                            REMOVE_SAVED_MOVIE
+                        )}
+                        active={isActiveIcon(savedMovies)}
                     />
                 </div>
                 <div className='movie_item_details_title'>

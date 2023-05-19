@@ -1,7 +1,7 @@
 type FavoriteProps = {
     active: boolean;
     onClick: () => void;
-}
+};
 const FavoriteIcon = ({ active, onClick }: FavoriteProps) => {
     return (
         <svg

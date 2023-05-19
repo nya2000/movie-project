@@ -48,6 +48,15 @@ export const selectMoviesListOptions = [
     { label: 'Смотреть позже', value: 'savedMovies', id: nanoid() },
 ];
 
+export const selectRatingOptions = [
+    { label: 'Высокая', value: 'rating-high', id: nanoid() },
+    { label: 'Низкая', value: 'rating-low', id: nanoid() },
+];
+export const selectPopularityOptions = [
+    { label: 'Популярный', value: 'popular', id: nanoid() },
+    { label: 'Неизвестный', value: 'unknown', id: nanoid() },
+];
+
 export const SELECT_MOVIES_LIST = {
     ALL_MOVIES: 'allMovies',
     FAVORITE_MOVIES: 'favoriteMovies',
@@ -59,6 +68,14 @@ export const SELECT_DETAILS = {
     POPULARITY_ASCENDING: 'popularity-asc',
     RATING_DESCENDING: 'rating-desc',
     RATING_ASCENDING: 'rating-asc',
+};
+export const SELECT_RATING = {
+    HIGH: 'rating-high',
+    LOW: 'rating-low',
+};
+export const SELECT_POPULAR = {
+    POPULAR: 'popular',
+    UNKNOWN: 'unknown',
 };
 export const AUTH_DATA = {
     login: 'user',
@@ -76,12 +93,22 @@ export const SELECT_DEFAULT_OPTION = {
     YEAR: SELECT_YEAR[2020],
     DETAILS: SELECT_DETAILS.POPULARITY_DESCENDING,
     MOVIES_LIST: SELECT_MOVIES_LIST.ALL_MOVIES,
+    GENRE: '80',
+    RATING: 'rating-high',
+    POPULARITY: 'popular',
+};
+
+export const ROUTER_PATH = {
+    HOME: '/',
+    MOVIE_DETAILS: '/movie-details/:movieId',
+    SEARCH: '/search',
 };
 
 export const LOG_OUT = 'logout';
 export const LOG_IN = 'login';
 export const PASSWORD = 'password';
 export const EMPTY_STRING = '';
+export const ITEMS_PER_PAGE = 9;
 
 export const movieDetails = {
     width: 'inherit',
@@ -106,4 +133,25 @@ export const authorizationModalStyle = {
     flexDirection: 'column',
     gap: '15px',
     alignItems: 'center',
+};
+export const SelectStyle = {
+    m: '10px 0',
+    color: 'white',
+    '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'white',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'white',
+    },
+    '& .MuiSvgIcon-root': {
+        color: 'white',
+    },
+    width: '220px',
+};
+
+export const SearchStyle = {
+    display: 'flex',
+    width: '1132px',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
 };
